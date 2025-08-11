@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PillowHub - Cửa Hàng Gối Ôm Cao Cấp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            cursor: pointer;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+            }
+
+            to {
+                filter: drop-shadow(0 0 20px rgba(118, 75, 162, 0.6));
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Product Grid */
+        .products {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart,
+        .view-details {
+            width: 48%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 4%;
+        }
+
+        .view-details {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            margin-right: 0;
+        }
+
+        .add-to-cart:hover,
+        .view-details:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .close:hover {
+            color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-detail-image {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: white;
+            height: 400px;
+        }
+
+        .product-detail-info h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .product-detail-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Cart Modal */
+        .cart-modal-content {
+            padding: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #f093fb, #4facfe);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Payment Modal */
+        .payment-form {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover,
+        .payment-method.selected {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .payment-method-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.error {
+            background: linear-gradient(45de, #f44336, #d32f2f);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .add-to-cart,
+            .view-details {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hidden sections */
+        .hidden {
+            display: none;
+        }
+
+        .page-section {
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-shapes">
+        <div class="shape">🌙</div>
+        <div class="shape">⭐</div>
+        <div class="shape">✨</div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo" onclick="showSection('home')">PillowHub</div>
+            <ul class="nav-links">
+                <li><a onclick="showSection('home')">Trang Chủ</a></li>
+                <li><a onclick="showSection('products')">Sản Phẩm</a></li>
+                <li><a onclick="showSection('about')">Giới Thiệu</a></li>
+                <li><a onclick="showSection('contact')">Liên Hệ</a></li>
+            </ul>
+            <button class="cart-btn" onclick="showCart()">
+                🛒 Giỏ Hàng (<span id="cart-count">0</span>)
+            </button>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home-section" class="page-section">
+        <div id="home" class="hero">
+            <div class="container">
+                <h1>Gối Ôm Cao Cấp</h1>
+                <p>Mang đến giấc ngủ ngon và cảm giác thoải mái nhất cho bạn</p>
+            </div>
+        </div>
+
+        <div id="products" class="products">
+            <div class="container">
+                <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+                <div class="product-grid" id="product-grid">
+                    <!-- Products will be loaded here -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products-section" class="page-section hidden">
+        <div class="container">
+            <h2 class="section-title">Tất Cả Sản Phẩm</h2>
+            <div class="product-grid" id="all-products-grid"></div>
+        </div>
+    </section>
+
+
+
+    <!-- About Section -->
+    <section id="about-section" class="page-section hidden">
+        <div class="container">
+            <div class="contact-section">
+                <h2 class="section-title" style="color: #333;">Về PillowHub</h2>
+                <div style="text-align: center; color: #666; line-height: 1.8; font-size: 1.1rem;">
+                    <p style="margin-bottom: 2rem;">
+                        PillowHub là thương hiệu hàng đầu chuyên cung cấp các sản phẩm gối ôm chất lượng cao tại Việt
+                        Nam.
+                        Chúng tôi cam kết mang đến cho khách hàng những sản phẩm tốt nhất với công nghệ tiên tiến nhất.
+                    </p>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                        <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                            <h3 style="color: #667eea; margin-bottom: 1rem;">Chất Lượng</h3>
+                            <p>Sản phẩm được kiểm định nghiêm ngặt, đảm bảo an toàn cho sức khỏe</p>
+                        </div>
+                        <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
+                            <h3 style="color: #667eea; margin-bottom: 1rem;">Giao Hàng</h3>
+                            <p>Giao hàng miễn phí toàn quốc, đổi trả trong 30 ngày</p>
+                        </div>
+                        <div style="padding: 2rem; background: #f8f9fa; border-radius: 15px;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">💎</div>
+                            <h3 style="color: #667eea; margin-bottom: 1rem;">Bảo Hành</h3>
+                            <p>Bảo hành 1 năm, hỗ trợ khách hàng 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="page-section hidden">
+        <div class="container">
+            <div class="contact-section">
+                <h2 class="section-title" style="color: #333;">Liên Hệ Với Chúng Tôi</h2>
+                <form class="contact-form" onsubmit="submitContactForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contact-name">Họ và Tên *</label>
+                            <input type="text" id="contact-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone">Số Điện Thoại *</label>
+                            <input type="tel" id="contact-phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email *</label>
+                        <input type="email" id="contact-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-subject">Chủ Đề</label>
+                        <select id="contact-subject" name="subject">
+                            <option value="general">Tư vấn chung</option>
+                            <option value="product">Thông tin sản phẩm</option>
+                            <option value="order">Đặt hàng</option>
+                            <option value="support">Hỗ trợ kỹ thuật</option>
+                            <option value="complaint">Khiếu nại</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Nội Dung *</label>
+                        <textarea id="contact-message" name="message" rows="5" required
+                            placeholder="Nhập nội dung tin nhắn của bạn..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="product-detail" id="product-detail">
+                <!-- Product detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="cart-modal-content">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Giỏ Hàng Của Bạn</h2>
+                <div id="cart-items"></div>
+                <div class="cart-total" id="cart-total">Tổng cộng: 0₫</div>
+                <button class="checkout-btn" onclick="showPayment()">Thanh Toán</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="cart-modal-content">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #333;">Thanh Toán</h2>
+                <form class="payment-form" onsubmit="processPayment(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-name">Họ và Tên *</label>
+                            <input type="text" id="customer-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-phone">Số Điện Thoại *</label>
+                            <input type="tel" id="customer-phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-email">Email</label>
+                        <input type="email" id="customer-email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Địa Chỉ Giao Hàng *</label>
+                        <textarea id="customer-address" name="address" rows="3" required
+                            placeholder="Nhập địa chỉ chi tiết..."></textarea>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem 0; color: #333;">Phương Thức Thanh Toán</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod('cod')">
+                            <div class="payment-method-icon">💵</div>
+                            <div>Thanh toán khi nhận hàng</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('bank')">
+                            <div class="payment-method-icon">🏦</div>
+                            <div>Chuyển khoản ngân hàng</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('momo')">
+                            <div class="payment-method-icon">📱</div>
+                            <div>Ví MoMo</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                            <div class="payment-method-icon">💳</div>
+                            <div>Thẻ tín dụng</div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="selected-payment" name="payment-method" value="cod">
+
+                    <div class="form-group">
+                        <label for="order-notes">Ghi Chú Đơn Hàng</label>
+                        <textarea id="order-notes" name="notes" rows="3"
+                            placeholder="Ghi chú đặc biệt cho đơn hàng..."></textarea>
+                    </div>
+
+                    <div class="cart-total" id="payment-total">Tổng thanh toán: 0₫</div>
+                    <button type="submit" class="submit-btn">Xác Nhận Đặt Hàng</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Liên Hệ</h3>
+                    <p>📞 0123 456 789</p>
+                    <p>📧 info@pillowhub.vn</p>
+                    <p>📍 123 Đường ABC, Quận 1, TP.HCM</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Dịch Vụ</h3>
+                    <a href="#">Giao hàng miễn phí</a>
+                    <a href="#">Đổi trả trong 30 ngày</a>
+                    <a href="#">Bảo hành 1 năm</a>
+                    <a href="#">Tư vấn 24/7</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Về PillowHub</h3>
+                    <p>Chúng tôi chuyên cung cấp các sản phẩm gối ôm chất lượng cao, mang đến trải nghiệm ngủ tuyệt vời
+                        nhất.</p>
+                </div>
+            </div>
+            <p>&copy; 2025 PillowHub. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        function loadAllProducts() {
+            const grid = document.getElementById('all-products-grid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+            <div class="product-image" style="padding:0;">
+                ${product.image
+                        ? `<img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">`
+                        : product.emoji}
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <div class="product-price">${formatPrice(product.price)}</div>
+                <button class="view-details" onclick="showProductDetail(${product.id})">
+                    Xem Chi Tiết
+                </button>
+                <button class="add-to-cart" onclick="addToCart(${product.id}, 1)">
+                    Thêm Vào Giỏ
+                </button>
+            </div>
+        `;
+                grid.appendChild(card);
+            });
+        }
+
+
+        // Product data with detailed information
+        const products = [
+            {
+                id: 1,
+                name: "Gối Ôm Anime Emilia",
+                description: "Gối ôm Emilia (Re:Zero) phong cách dễ thương, chất liệu cao cấp.",
+                price: 2900000,
+                image: "/image/Emilia1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải lụa cao cấp</li>
+            <li>Màu sắc tươi sáng</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải lụa", "Màu sắc tươi sáng", "Bông gòn mềm"]
+            },
+
+            {
+                id: 2,
+                name: "Gối Ôm Anime Megumin",
+                description: "Gối ôm Megumin (KonoSuba) năng động và đáng yêu.",
+                price: 2800000,
+                image: "/image/Megumin1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải lụa mát</li>
+            <li>Hình in sống động</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải lụa", "In sắc nét", "Bông gòn"]
+            },
+
+            {
+                id: 3,
+                name: "Gối Ôm Anime Asuna",
+                description: "Gối ôm Asuna (Sword Art Online) sang trọng và tinh tế.",
+                price: 1500000,
+                image: "/image/Asuna1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải satin mềm</li>
+            <li>Hình in rõ nét</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải satin", "In rõ nét", "Bông gòn"]
+            },
+
+            {
+                id: 4,
+                name: "Gối Ôm Anime Zero Two",
+                description: "Gối ôm Zero Two (Darling in the Franxx) với thiết kế nổi bật.",
+                price: 3500000,
+                image: "/image/ZeroTwo1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải trơn mềm mại</li>
+            <li>Hình in HD</li>
+            <li>Kích thước: 160x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải mịn", "In HD", "Bông gòn cao cấp"]
+            },
+
+            {
+                id: 5,
+                name: "Gối Ôm Anime Nezuko",
+                description: "Gối ôm Nezuko (Kimetsu no Yaiba) dễ thương và ấm áp.",
+                price: 2000000,
+                image: "/image/Nezuko1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải mịn, thoáng khí</li>
+            <li>Hình in sắc nét, bền màu</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải mịn", "Bền màu", "Bông gòn cao cấp"]
+            },
+
+            {
+                id: 6,
+                name: "Gối Ôm Anime Rem",
+                description: "Gối ôm in hình nhân vật Rem (Re:Zero) chất lượng cao, vải mịn mượt.",
+                price: 3800000,
+                image: "/image/Rem1.jpg",
+                detailDescription: `
+                <h3>Đặc điểm nổi bật:</h3>
+                 <ul>
+                    <li>Chất liệu vải trơn mịn, mềm mại</li>
+                    <li>In hình sắc nét, không phai màu</li>
+                    <li>Kích thước: 150x50 cm</li>
+                    <li>Ruột gối bông gòn êm ái</li>
+                </ul>
+                <h3>Phù hợp cho:</h3>
+                <p>Người yêu thích anime, fan Re:Zero</p>
+                `,
+                features: ["Vải mịn", "In sắc nét", "Ruột gối bông gòn"]
+            },
+
+            {
+                id: 7,
+                name: "Gối Ôm Anime Mikasa",
+                description: "Gối ôm Mikasa (Attack on Titan) phong cách mạnh mẽ.",
+                price: 3700000,
+                image: "/image/Mikasa1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải cotton cao cấp</li>
+            <li>Hình in rõ nét</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Cotton cao cấp", "In rõ nét", "Bông gòn"]
+            },
+
+            {
+                id: 8,
+                name: "Gối Ôm Anime Hinata",
+                description: "Gối ôm Hinata (Naruto) dịu dàng và đáng yêu.",
+                price: 3000000,
+                image: "/image/Hinata1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải satin mềm mại</li>
+            <li>Hình in 3D sống động</li>
+            <li>Kích thước: 150x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải satin", "In 3D", "Bông gòn"]
+            },
+
+            {
+                id: 9,
+                name: "Gối Ôm Anime Kurumi",
+                description: "Gối ôm Kurumi (Date A Live) bí ẩn và quyến rũ.",
+                price: 4500000,
+                image: "/image/Kurumi1.jpg",
+                detailDescription: `
+        <h3>Đặc điểm nổi bật:</h3>
+        <ul>
+            <li>Vải trơn mềm mượt</li>
+            <li>Hình in chất lượng cao</li>
+            <li>Kích thước: 160x50 cm</li>
+        </ul>
+    `,
+                features: ["Vải trơn", "In chất lượng cao", "Bông gòn cao cấp"]
+            }
+
+        ];
+
+        let cart = [];
+        let currentSection = 'home';
+
+        // Load cart from sessionStorage on page load
+        function loadCart() {
+            try {
+                const savedCart = sessionStorage.getItem('pillowhub_cart');
+                if (savedCart) {
+                    cart = JSON.parse(savedCart);
+                    updateCartCount();
+                }
+            } catch (error) {
+                console.log('Không thể tải giỏ hàng từ storage');
+                cart = [];
+            }
+        }
+
+        // Save cart to sessionStorage
+        function saveCart() {
+            try {
+                sessionStorage.setItem('pillowhub_cart', JSON.stringify(cart));
+            } catch (error) {
+                console.log('Không thể lưu giỏ hàng');
+            }
+        }
+
+        // Show/hide sections
+        function showSection(sectionName) {
+
+            if (sectionName === 'products') {
+                loadAllProducts();
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            currentSection = sectionName;
+        }
+
+        // Load products
+        function loadProducts() {
+            const productGrid = document.getElementById('product-grid');
+            productGrid.innerHTML = '';
+
+            // Lấy 4 sản phẩm ngẫu nhiên
+            const featured = [...products]
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+
+            featured.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+            <div class="product-image" style="padding:0;">
+                ${product.image
+                        ? `<img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">`
+                        : product.emoji}
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <div class="product-price">${formatPrice(product.price)}</div>
+                <button class="view-details" onclick="showProductDetail(${product.id})">Xem Chi Tiết</button>
+                <button class="add-to-cart" onclick="addToCart(${product.id}, 1)">Thêm Vào Giỏ</button>
+            </div>
+        `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+
+        // Format price
+        function formatPrice(price) {
+            return price.toLocaleString('vi-VN') + '₫';
+        }
+
+        // Show product detail
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const productDetail = document.getElementById('product-detail');
+            productDetail.innerHTML = `
+                <div class="product-detail-image" style="padding:0;">
+                     ${product.image
+                    ? `<img src="${product.image}" alt="${product.name}" 
+     style="width:100%; height:100%; object-fit:contain; background:#fff; padding:10px;">
+`
+                    : product.emoji}
+                </div>
+
+                <div class="product-detail-info">
+                    <h2>${product.name}</h2>
+                    <div class="product-detail-price">${formatPrice(product.price)}</div>
+                    <div class="product-detail-description">
+                        ${product.detailDescription}
+                    </div>
+                    <div class="quantity-selector">
+                        <label><strong>Số lượng:</strong></label>
+                        <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                        <input type="number" class="quantity-input" id="detail-quantity" value="1" min="1" max="10">
+                        <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+                    <button class="add-to-cart" style="width: 100%; font-size: 1.2rem;" onclick="addToCartFromDetail(${product.id})">
+                        Thêm Vào Giỏ Hàng
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('product-modal').style.display = 'block';
+        }
+
+        // Change quantity in product detail
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('detail-quantity');
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity += change;
+
+            if (currentQuantity < 1) currentQuantity = 1;
+            if (currentQuantity > 10) currentQuantity = 10;
+
+            quantityInput.value = currentQuantity;
+        }
+
+        // Add to cart from detail modal
+        function addToCartFromDetail(productId) {
+            const quantity = parseInt(document.getElementById('detail-quantity').value);
+            addToCart(productId, quantity);
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        // Add to cart function
+        function addToCart(productId, quantity = 1) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity: quantity });
+            }
+
+            updateCartCount();
+            saveCart();
+
+            // Animation effect
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.classList.add('cart-animation');
+            setTimeout(() => {
+                cartBtn.classList.remove('cart-animation');
+            }, 300);
+
+            // Show success message
+            showNotification(`Đã thêm ${quantity} ${product.name} vào giỏ hàng!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Show cart
+        function showCart() {
+            if (cart.length === 0) {
+                showNotification('Giỏ hàng của bạn đang trống!', 'error');
+                return;
+            }
+
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-image" style="padding:0;">
+                        ${item.image
+                        ? `<img src="${item.image}" alt="${item.name}" style="width:100%; height:100%; object-fit:cover;">`
+                        : item.emoji}
+                    </div>
+
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${formatPrice(item.price)} x ${item.quantity}</div>
+                    </div>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)">-</button>
+                        <input type="number" class="quantity-input" value="${item.quantity}" onchange="setCartQuantity(${index}, this.value)" min="1" max="10">
+                        <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)">+</button>
+                    </div>
+                    <button class="quantity-btn" onclick="removeFromCart(${index})" style="background: #f44336;">🗑️</button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            document.getElementById('cart-total').textContent = `Tổng cộng: ${formatPrice(total)}`;
+            document.getElementById('cart-modal').style.display = 'block';
+        }
+
+        // Update cart quantity
+        function updateCartQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                if (cart[index].quantity > 10) cart[index].quantity = 10;
+                updateCartCount();
+                saveCart();
+                showCart(); // Refresh cart display
+            }
+        }
+
+        // Set cart quantity
+        function setCartQuantity(index, quantity) {
+            const qty = parseInt(quantity);
+            if (qty <= 0) {
+                removeFromCart(index);
+            } else {
+                cart[index].quantity = qty > 10 ? 10 : qty;
+                updateCartCount();
+                saveCart();
+                showCart(); // Refresh cart display
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(index) {
+            const item = cart[index];
+            cart.splice(index, 1);
+            updateCartCount();
+            saveCart();
+            showNotification(`Đã xóa ${item.name} khỏi giỏ hàng!`);
+            showCart(); // Refresh cart display
+        }
+
+        // Show payment
+        function showPayment() {
+            if (cart.length === 0) {
+                showNotification('Giỏ hàng trống!', 'error');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('payment-total').textContent = `Tổng thanh toán: ${formatPrice(total)}`;
+
+            document.getElementById('cart-modal').style.display = 'none';
+            document.getElementById('payment-modal').style.display = 'block';
+        }
+
+        // Select payment method
+        let selectedPaymentMethod = 'cod';
+        function selectPaymentMethod(method) {
+            // Remove selected class from all methods
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+
+            // Add selected class to clicked method
+            event.target.closest('.payment-method').classList.add('selected');
+            selectedPaymentMethod = method;
+            document.getElementById('selected-payment').value = method;
+        }
+
+        // Process payment
+        function processPayment(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const customerData = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                address: formData.get('address'),
+                paymentMethod: formData.get('payment-method'),
+                notes: formData.get('notes')
+            };
+
+            // Validate required fields
+            if (!customerData.name || !customerData.phone || !customerData.address) {
+                showNotification('Vui lòng điền đầy đủ thông tin bắt buộc!', 'error');
+                return;
+            }
+
+            // Simulate payment processing
+            const orderNumber = 'PH' + Date.now();
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            setTimeout(() => {
+                // Clear cart
+                cart = [];
+                updateCartCount();
+                saveCart();
+
+                // Close modal
+                document.getElementById('payment-modal').style.display = 'none';
+
+                // Show success message
+                showNotification(`Đặt hàng thành công! Mã đơn hàng: ${orderNumber}`, 'success');
+
+                // Show order confirmation
+                setTimeout(() => {
+                    alert(`Cảm ơn ${customerData.name}!\n\nĐơn hàng của bạn đã được xác nhận:\n• Mã đơn hàng: ${orderNumber}\n• Tổng tiền: ${formatPrice(total)}\n• Phương thức thanh toán: ${getPaymentMethodName(customerData.paymentMethod)}\n\nChúng tôi sẽ liên hệ với bạn trong vòng 24h!`);
+                }, 1000);
+            }, 2000);
+
+            // Show processing message
+            showNotification('Đang xử lý đơn hàng...', 'info');
+        }
+
+        // Get payment method name
+        function getPaymentMethodName(method) {
+            const names = {
+                'cod': 'Thanh toán khi nhận hàng',
+                'bank': 'Chuyển khoản ngân hàng',
+                'momo': 'Ví MoMo',
+                'card': 'Thẻ tín dụng'
+            };
+            return names[method] || 'Không xác định';
+        }
+
+        // Submit contact form
+        function submitContactForm(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const contactData = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message')
+            };
+
+            // Validate required fields
+            if (!contactData.name || !contactData.phone || !contactData.email || !contactData.message) {
+                showNotification('Vui lòng điền đầy đủ thông tin!', 'error');
+                return;
+            }
+
+            // Simulate form submission
+            showNotification('Đang gửi tin nhắn...', 'info');
+
+            setTimeout(() => {
+                showNotification('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong 24h.', 'success');
+                event.target.reset();
+            }, 2000);
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(notification => {
+                document.body.removeChild(notification);
+            });
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            // Set background color based on type
+            let bgColor = 'linear-gradient(45deg, #4CAF50, #45a049)'; // success
+            if (type === 'error') {
+                bgColor = 'linear-gradient(45deg, #f44336, #d32f2f)';
+            } else if (type === 'info') {
+                bgColor = 'linear-gradient(45deg, #2196F3, #1976D2)';
+            }
+
+            notification.style.background = bgColor;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Modal handling
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+
+            if (event.target.classList.contains('close')) {
+                event.target.closest('.modal').style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target && currentSection === 'home') {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProducts();
+            loadCart();
+
+            // Set default payment method
+            document.querySelector('.payment-method').classList.add('selected');
+
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                .cart-animation {
+                    animation: bounce 0.3s ease;
+                }
+                @keyframes bounce {
+                    0%, 20%, 60%, 100% {
+                        transform: translateY(0);
+                    }
+                    40% {
+                        transform: translateY(-10px);
+                    }
+                    80% {
+                        transform: translateY(-5px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+
+</html>
